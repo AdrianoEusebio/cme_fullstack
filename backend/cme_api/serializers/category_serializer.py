@@ -4,5 +4,5 @@ from cme_api.models import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'type', 'descricao']
+        fields = '__all__'
         read_only_fields = ['id']

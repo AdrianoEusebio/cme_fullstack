@@ -1,15 +1,16 @@
 from pathlib import Path
-from decouple import config
+from decouple import Config, RepositoryEnv
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env_path = BASE_DIR / 'dotenv_files' / '.env'
+config = Config(RepositoryEnv(env_path))
 
 SECRET_KEY = config('SECRET_KEY')  
 DEBUG = config('DEBUG', default=False, cast=bool) 
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*').split(',')
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'cme_api',
@@ -19,7 +20,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_spectacular',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,10 +60,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cme_backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -64,10 +70,6 @@ DATABASES = {
         'PORT': config('POSTGRES_PORT', default='5432'),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -84,25 +86,36 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Nome da sua API',
+    'DESCRIPTION': 'Descrição da API',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SECURITY': [{'BearerAuth': []}],
+    'COMPONENTS': {
+        'securitySchemes': {
+            'BearerAuth': {
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT',
+            }
+        }
+    }
+}
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
 USE_TZ = True
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
