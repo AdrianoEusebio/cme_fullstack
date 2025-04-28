@@ -8,10 +8,8 @@ from cme_api.views.washing_viewset import WashingViewSet
 from cme_api.views.receiving_viewset import ReceivingViewSet
 from cme_api.views.distribution_viewset import DistributionViewSet
 from cme_api.views.process_history_viewset import ProcessHistoryViewSet
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView
+from cme_api.views.token_viewset import CustomTokenObtainPairView
 
 
 router = DefaultRouter()
@@ -24,7 +22,7 @@ router.register(r'distributions', DistributionViewSet, basename='distributions')
 router.register(r'process-histories', ProcessHistoryViewSet, basename='process-histories')
 
 urlpatterns = [
-    path('api/v1/', include(router.urls)),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),	
+    path('v1/', include(router.urls)),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),	
 ]

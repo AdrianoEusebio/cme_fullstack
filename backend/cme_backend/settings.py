@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_spectacular',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -32,6 +33,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -111,6 +113,7 @@ SPECTACULAR_SETTINGS = {
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
+CORS_ALLOW_ALL_ORIGINS = True
 
 USE_I18N = True
 USE_TZ = True
