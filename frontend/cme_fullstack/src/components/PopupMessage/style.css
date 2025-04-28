@@ -1,94 +1,52 @@
-/* POPUP GERAL */
 .popup {
-    position: fixed;
-    bottom: 20px; /* <-- desce para a parte inferior */
-    right: 20px; /* <-- canto direito */
-    z-index: 1000;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 12px 16px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    min-width: 280px;
-    max-width: 300px;
-    animation: fadeInUp 0.5s ease-out;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  border-left: 5px solid;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+  min-width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeInUp 0.5s ease;
+}
+
+.popup.success {
+  border-color: green;
+}
+
+.popup.error {
+  border-color: red;
+}
+
+.popup.info {
+  border-color: blue;
+}
+
+.popup.alert {
+  border-color: orange;
+}
+
+.popup .icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.popup .message {
+  color: #333;
+  font-weight: bold;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  /* ANIMAÇÃO */
-  @keyframes fadeInUp {
-    from {
-      transform: translateY(40px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0px);
-      opacity: 1;
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* POPUP ESPECÍFICOS (já existiam, mantém) */
-  .success-popup {
-    background-color: #edfbd8;
-    border: solid 1px #84d65a;
-  }
-  
-  .success-icon path {
-    fill: #84d65a;
-  }
-  
-  .success-message {
-    color: #2b641e;
-  }
-  
-  .error-popup {
-    background-color: #fef2f2;
-    border: solid 1px #f87171;
-  }
-  
-  .error-icon path {
-    fill: #f87171;
-  }
-  
-  .error-message {
-    color: #991b1b;
-  }
-  
-  .alert-popup {
-    background-color: #fefce8;
-    border: solid 1px #facc15;
-  }
-  
-  .alert-icon path {
-    fill: #facc15;
-  }
-  
-  .alert-message {
-    color: #ca8a04;
-  }
-  
-  .info-popup {
-    background-color: #eff6ff;
-    border: solid 1px #1d4ed8;
-  }
-  
-  .info-icon path {
-    fill: #1d4ed8;
-  }
-  
-  .info-message {
-    color: #1d4ed8;
-  }
-  
-  /* Fechar botão */
-  .close-icon {
-    margin-left: auto;
-    cursor: pointer;
-  }
-  
-  .close-svg {
-    width: 20px;
-    height: 20px;
-  }
-  
+}

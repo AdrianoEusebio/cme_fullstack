@@ -11,7 +11,7 @@ class ProcessHistoryViewSet(viewsets.ModelViewSet):
     serializer_class = ProcessHistorySerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['produto_serial', 'etapa', 'user']
+    search_fields = ['serial__codigo_serial', 'etapa', 'user__username']
     
     @extend_schema(
         parameters=[

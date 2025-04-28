@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "./style.css";
 
 interface PopupMessageProps {
@@ -7,57 +8,46 @@ interface PopupMessageProps {
 }
 
 function PopupMessage({ type, message, onClose }: PopupMessageProps) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
   return (
-    <div className={`popup ${type}-popup`}>
-      <div className={`popup-icon ${type}-icon`}>
+    <div className={`popup ${type}`}>
+      <div className="icon">
         {type === "success" && (
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="success-svg">
-            <path
-              fillRule="evenodd"
-              d="m12 1c-6.075 0-11 4.925-11 11s4.925 11 11 11 11-4.925 11-11-4.925-11-11-11zm4.768 9.14..."
-              clipRule="evenodd"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="green" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-check-circle">
+            <path d="M9 12l2 2l4-4" />
+            <circle cx="12" cy="12" r="10" />
           </svg>
         )}
         {type === "error" && (
-          <svg className="error-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true">
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10..."
-              clipRule="evenodd"
-            />
-          </svg>
-        )}
-        {type === "alert" && (
-          <svg className="alert-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true">
-            <path
-              fillRule="evenodd"
-              d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334..."
-              clipRule="evenodd"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x-circle">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="15" y1="9" x2="9" y2="15" />
+            <line x1="9" y1="9" x2="15" y2="15" />
           </svg>
         )}
         {type === "info" && (
-          <svg className="info-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0..."
-              clipRule="evenodd"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="blue" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-info">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12.01" y2="8" />
+          </svg>
+        )}
+        {type === "alert" && (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="orange" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-alert-triangle">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12" y2="17" />
           </svg>
         )}
       </div>
-
-      <div className={`${type}-message`}>{message}</div>
-
-      <div className="popup-icon close-icon" onClick={onClose}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className="close-svg">
-          <path
-            d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"
-            className="close-path"
-          />
-        </svg>
-      </div>
+      <div className="message">{message}</div>
     </div>
   );
 }
