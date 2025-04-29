@@ -1,26 +1,23 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./auth/AuthContext";
-import PrivateRoute from "./routes/PrivateRoute";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Login";
 import HomePage from "./pages/Home";
+import ProtectedRoute from "@/auth/ProtectedRoute";
+import ReceivingPage from "@/pages/Receiving";
+import WashingPage from "./pages/Washing";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />}/>
-          <Route 
-            path="/home" 
-            element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            } 
-          />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/recebimento" element={<ReceivingPage />}/>
+          <Route path="/lavagem" element={<WashingPage />}/>
+        </Route>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Router>
   );
 }
 

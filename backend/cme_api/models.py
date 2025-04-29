@@ -81,6 +81,7 @@ class ProcessHistory(models.Model):
         DISTRIBUTION = "DISTRIBUTION", "Distribution"
         WASHING = "WASHING", "Washing"
         DISCARDED = "DISCARDED", "Discarded"
+        WASHING_COMPLETED = "WASHING COMPLETE"
     
     serial = models.ForeignKey("ProductSerial", on_delete=models.CASCADE, related_name="entry_process_history")
     etapa = models.CharField(

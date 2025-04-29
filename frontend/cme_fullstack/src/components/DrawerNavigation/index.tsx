@@ -2,10 +2,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./style.css";
 
 interface DrawerNavigationProps {
-  isAdmin: boolean;
+  group: string | null;
 }
 
-function DrawerNavigation({ isAdmin }: DrawerNavigationProps) {
+function DrawerNavigation({ group }: DrawerNavigationProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -14,21 +14,37 @@ function DrawerNavigation({ isAdmin }: DrawerNavigationProps) {
   };
 
   const handleLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("group");
     navigate("/login");
   };
+
+  const isAdmin = group === "ADMIN";
+  const isTecnico = group === "TECNICO";
+  const isEnfermeiro = group === "ENFERMEIRO";
 
   return (
     <aside className="sidebar">
       <div className="menu-top">
         <h2>Menu</h2>
+
         <Link to="/home" className={isActive("home") ? "active" : ""}>Histórico</Link>
-        <Link to="/process" className={isActive("process") ? "active" : ""}>Processos</Link>
+        {(isAdmin || isTecnico) && (
+          <>
+            <Link to="/recebimento" className={isActive("recebimento") ? "active" : ""}>Recebimento</Link>
+            <Link to="/lavagem" className={isActive("lavagem") ? "active" : ""}>Lavagem</Link>
+            <Link to="/distribuicao" className={isActive("distribuicao") ? "active" : ""}>Distribuição</Link>
+          </>
+        )}
         {isAdmin && (
           <>
-            <Link to="/materials" className={isActive("materials") ? "active" : ""}>Materiais</Link>
-            <Link to="/users" className={isActive("users") ? "active" : ""}>Usuários</Link>
+            <Link to="/produtos" className={isActive("produtos") ? "active" : ""}>Produtos</Link>
+            <Link to="/usuarios" className={isActive("usuarios") ? "active" : ""}>Usuários</Link>
           </>
+        )}
+        {(isAdmin || isEnfermeiro) && (
+          <Link to="/relatorio" className={isActive("relatorio") ? "active" : ""}>Relatório</Link>
         )}
       </div>
 

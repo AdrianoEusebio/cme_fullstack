@@ -11,8 +11,9 @@ class WashingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Washing
-        fields = '__all__'
-        read_only_fields = ['id', 'entry_data', 'status']
+        fields = ['id', 'produto_serial', 'isWashed', 'entry_data']
+        read_only_fields = ['user', 'entry_data']
 
     def create(self, validated_data):
-        return Washing.objects.create(**validated_data)
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)

@@ -5,6 +5,7 @@ from cme_api.models import ProcessHistory
 from cme_api.serializers import ProcessHistorySerializer
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiParameter
+from cme_api.serializers import ProcessHistoryCreateSerializer
 
 class ProcessHistoryViewSet(viewsets.ModelViewSet):
     queryset = ProcessHistory.objects.all()
@@ -18,6 +19,7 @@ class ProcessHistoryViewSet(viewsets.ModelViewSet):
             OpenApiParameter(name="serial", description="Código serial do produto", required=True, type=str),
         ]
     )
+    
     @action(detail=False, methods=['get'], url_path='traceability')
     def traceability(self, request):
         serial = request.query_params.get('serial')
@@ -31,3 +33,11 @@ class ProcessHistoryViewSet(viewsets.ModelViewSet):
         queryset = self.queryset.filter(serial__codigo_serial=serial).order_by('entry_data')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+    def get_serializer_class(self):
+        if self.action in ['create', 'update', 'partial_update']:
+            return ProcessHistoryCreateSerializer
+        return ProcessHistorySerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

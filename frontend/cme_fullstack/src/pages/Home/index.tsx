@@ -37,11 +37,6 @@ function HomePage() {
     }
   };
 
-  const logout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
-
   const filteredHistory = processHistory
     .sort((a, b) => b.id - a.id)
     .filter((item) =>
@@ -66,7 +61,7 @@ function HomePage() {
 
   return (
     <div className="home-container">
-      <DrawerNavigation isAdmin={isAdmin} />
+      <DrawerNavigation group={localStorage.getItem("group")} />
       <main className="content">
         <header className="header">
           <h1 className="title">📜 Histórico de Processos</h1>

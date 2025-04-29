@@ -15,12 +15,9 @@ class WashingViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         washing = serializer.save()
         ProcessHistory.objects.create(
-            serial=washing.produto_serial,
-            etapa=ProcessHistory.EtapaChoices.WASHING,
-            user = washing.user,
-            entry_data = timezone.now(),
-            receiving = None,
-            distribution = None,
-            washing = washing
-        )
+        serial=washing.produto_serial,
+        etapa=ProcessHistory.EtapaChoices.WASHING,
+        user=washing.user,
+        washing=washing
+)
       
