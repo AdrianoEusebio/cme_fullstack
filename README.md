@@ -28,7 +28,7 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 
 1. Clone o repositório:
    ```bash
-   git clone https://seurepositorio.git](https://github.com/AdrianoEusebio/cme_fullstack
+   git clone https://github.com/AdrianoEusebio/cme_fullstack.git
    cd seu-projeto
 
 2. Suba os containers:
