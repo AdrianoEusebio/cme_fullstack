@@ -46,7 +46,10 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
    Admin Django: http://localhost:8000/admin
 
 
-🔑 Credenciais Padrão (Superusuário Django)
+
+
+
+## 🔑 Credenciais Padrão (Superusuário Django)
    ```bash
    Usuário: admin
    Senha: admin123
