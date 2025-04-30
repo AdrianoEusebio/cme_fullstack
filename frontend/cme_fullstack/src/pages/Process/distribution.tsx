@@ -98,7 +98,6 @@ function DistributionPage() {
         </header>
 
         <div className="process-grid">
-          {/* Tabela Seriais Disponíveis */}
           <section className="process-history">
             <h2>Seriais Disponíveis</h2>
             <input
@@ -144,8 +143,6 @@ function DistributionPage() {
               📤 Confirmar Distribuição
             </button>
           </section>
-
-          {/* Tabela Distribuições Realizadas */}
           <section className="process-history">
             <h2>Distribuições Realizadas</h2>
             <div className="table-responsive">

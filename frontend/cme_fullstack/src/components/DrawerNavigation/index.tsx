@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./style.css";
-import { gerarRelatorioPDF } from "../Relatorio/relatorioPDF";
+import { gerarRelatorioExcel } from "../Relatorio/relatorioExcel";
+
 
 
 interface DrawerNavigationProps {
@@ -72,8 +73,8 @@ function DrawerNavigation({ group }: DrawerNavigationProps) {
             </Link>
           </>
         )}
-        {(isAdmin || isEnfermeiro) && (
-          <button onClick={gerarRelatorioPDF} className="relatorio-button">
+        {(isAdmin || isEnfermeiro || isTecnico) && (
+          <button onClick={gerarRelatorioExcel} className="account-button">
             📄 Gerar Relatório
           </button>
         )}

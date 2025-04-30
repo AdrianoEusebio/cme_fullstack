@@ -68,7 +68,6 @@ function ProductPage() {
         </header>
 
         <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
-          {/* Formulário */}
           <section
             className="process-history"
             style={{
@@ -104,8 +103,6 @@ function ProductPage() {
               ➕ Adicionar Produto
             </button>
           </section>
-
-          {/* Tabela */}
           <section className="process-history" style={{ flex: 2 }}>
             <h2>Lista de produtos</h2>
             <div className="table-responsive">

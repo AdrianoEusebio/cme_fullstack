@@ -63,7 +63,7 @@ function ReceivingPage() {
       <DrawerNavigation group={localStorage.getItem("group")} />
       <main className="content">
         <header className="header">
-          <h1 className="title">📥 Processos de Receiving</h1>
+          <h1 className="title">📥 Processos de Recebimento</h1>
         </header>
 
         <div className="process-actions">

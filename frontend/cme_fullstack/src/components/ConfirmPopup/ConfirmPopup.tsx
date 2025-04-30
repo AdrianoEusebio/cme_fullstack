@@ -1,5 +1,5 @@
 import React from "react";
-import "./ConfirmPopup.css"; // Importa o estilo separado
+import "./ConfirmPopup.css";
 
 interface ConfirmPopupProps {
   message: string;
