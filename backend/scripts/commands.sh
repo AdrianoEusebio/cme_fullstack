@@ -2,13 +2,11 @@
 
 echo "🚀 Rodando comandos iniciais do Django..."
 
-python manage.py collectstatic --no-input
-python manage.py makemigrations --no-input
-python manage.py migrate --no-input
+python manage.py collectstatic --noinput || exit 1
+python manage.py makemigrations --noinput || exit 1
+python manage.py migrate --noinput || exit 1
 
 echo "🔐 Criando superusuário (caso não exista)..."
-
-# Este comando cria o superusuário via script inline
 python manage.py shell << EOF
 from django.contrib.auth import get_user_model
 User = get_user_model()
