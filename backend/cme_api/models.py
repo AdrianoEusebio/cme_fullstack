@@ -24,10 +24,25 @@ class Product(models.Model):
 
     
 class ProductSerial(models.Model):
+    
+    class StatusChoices(models.TextChoices):
+        NO_PROCESS = "NO PROCESS", "Sem processo"
+        RECEIVING = "RECEIVING", "Recebido"
+        WASHING = "WASHING", "Lavagem"
+        WASHING_COMPLETED = "WASHING COMPLETE", "Lavado"
+        ESTERELIZATION = "ESTERELIZATION", "Esterilização"
+        ESTERELIZATION_COMPLETED = "ESTERELIZATION COMPLETE", "Esterilizado"
+        DISTRIBUTION = "DISTRIBUTION", "Distribuído"
+
     produto = models.ForeignKey("Product", on_delete=models.CASCADE, related_name="serials_products")
     codigo_serial = models.CharField(max_length=100, unique=True, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
-
+    status = models.CharField(
+        max_length=30,
+        choices=StatusChoices.choices,
+        default=StatusChoices.NO_PROCESS
+    )
+    
     def save(self, *args, **kwargs):
         if not self.codigo_serial:
             prefixo = self.produto.get_codigo_prefixo()

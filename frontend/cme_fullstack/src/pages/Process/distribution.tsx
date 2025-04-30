@@ -36,7 +36,9 @@ function DistributionPage() {
 
   const fetchSeriaisDisponiveis = async () => {
     try {
-      const response = await api.get("/v1/product-serials/seriais-validos-distribution/");
+      const response = await api.get("/v1/product-serials/", {
+        params: { status: "RECEIVING,WASHING COMPLETE,ESTERELIZATION" }
+      });
       setSeriaisDisponiveis(response.data);
     } catch (error) {
       console.error("Erro ao buscar seriais disponíveis:", error);

@@ -12,9 +12,16 @@ interface SerialItem {
 }
 
 function ReceivingPage() {
-  const [seriaisDisponiveis, setSeriaisDisponiveis] = useState<SerialItem[]>([]);
-  const [selectedSerialId, setSelectedSerialId] = useState<number | null>(null);
-  const [popup, setPopup] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [seriaisDisponiveis, setSeriaisDisponiveis] = useState<SerialItem[]>(
+    []
+  );
+  const [selectedSerialCodigo, setSelectedSerialCodigo] = useState<
+    string | null
+  >(null);
+  const [popup, setPopup] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +30,9 @@ function ReceivingPage() {
 
   const fetchSeriais = async () => {
     try {
-      const response = await api.get<SerialItem[]>("/v1/product-serials/seriais-validos/");
+      const response = await api.get<SerialItem[]>("/v1/product-serials/", {
+        params: { status: "NO PROCESS,DISTRIBUTION" }
+      });
       setSeriaisDisponiveis(response.data);
     } catch (error) {
       console.error("Erro ao buscar seriais disponíveis:", error);
@@ -31,16 +40,18 @@ function ReceivingPage() {
   };
 
   const cadastrarProcesso = async () => {
-    if (!selectedSerialId) return;
+    if (!selectedSerialCodigo) return;
 
     try {
       await api.post("/v1/receivings/", {
-        serial: selectedSerialId,
+        produto_serial: selectedSerialCodigo,
       });
-
-      setPopup({ type: "success", message: "Processo de Receiving cadastrado!" });
-      setSelectedSerialId(null);
-      fetchSeriais(); 
+      setPopup({
+        type: "success",
+        message: "Processo de Receiving cadastrado!",
+      });
+      setSelectedSerialCodigo(null);
+      fetchSeriais();
     } catch (error) {
       console.error("Erro ao cadastrar processo:", error);
       setPopup({ type: "error", message: "Erro ao cadastrar processo." });
@@ -56,7 +67,11 @@ function ReceivingPage() {
         </header>
 
         <div className="process-actions">
-          <button className="submit-button" onClick={cadastrarProcesso} disabled={!selectedSerialId}>
+          <button
+            className="submit-button"
+            onClick={cadastrarProcesso}
+            disabled={!selectedSerialCodigo}
+          >
             ➕ Adicionar Processo
           </button>
         </div>
@@ -79,9 +94,11 @@ function ReceivingPage() {
                         <input
                           type="radio"
                           name="serial"
-                          value={item.id}
-                          checked={selectedSerialId === item.id}
-                          onChange={() => setSelectedSerialId(item.id)}
+                          value={item.codigo_serial}
+                          checked={selectedSerialCodigo === item.codigo_serial}
+                          onChange={() =>
+                            setSelectedSerialCodigo(item.codigo_serial)
+                          }
                         />
                       </td>
                       <td>{item.codigo_serial}</td>

@@ -13,4 +13,4 @@ class ReceivingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Receiving
         fields = '__all__'
-        read_only_fields = ['id', 'entry_data']
+        read_only_fields = ['id', 'entry_data', 'user']

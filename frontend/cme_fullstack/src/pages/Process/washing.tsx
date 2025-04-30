@@ -30,7 +30,9 @@ function WashingPage() {
 
   const fetchSeriais = async () => {
     try {
-      const response = await api.get("/v1/product-serials/seriais-validos-washing/");
+      const response = await api.get("/v1/product-serials/", {
+        params: { status: "RECEIVING" }
+      });
       const seriais = response.data.map((item: any) => ({
         ...item,
         isWashing: false,

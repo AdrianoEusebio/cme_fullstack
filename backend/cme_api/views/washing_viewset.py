@@ -1,9 +1,10 @@
 from rest_framework import viewsets, filters
+from cme_api.utils import registrar_etapa
 from cme_api.models import Washing
 from cme_api.serializers import WashingSerializer
 from rest_framework.permissions import IsAuthenticated
 from cme_api.models import ProcessHistory
-from django.utils import timezone
+
 
 class WashingViewSet(viewsets.ModelViewSet):
     queryset = Washing.objects.all()
@@ -16,11 +17,5 @@ class WashingViewSet(viewsets.ModelViewSet):
         washing = serializer.save()
         washing.isWashed = True
         washing.save()
-
-        ProcessHistory.objects.create(
-            serial=washing.produto_serial,
-            etapa=ProcessHistory.EtapaChoices.WASHING,
-            user=washing.user,
-            washing=washing
-        )
+        registrar_etapa(washing.produto_serial, ProcessHistory.EtapaChoices.WASHING, washing.user, washing)
       

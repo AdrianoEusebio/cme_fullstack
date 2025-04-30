@@ -12,7 +12,8 @@ interface SerialItem {
 
 interface EsterelizationItem {
   id: number;
-  produto_serial: number;
+  produto_serial: string;          
+  produto_serial_id: number;       
   codigo_serial: string;
   produto_nome: string;
   entry_data: string;
@@ -33,7 +34,9 @@ function EsterelizationPage() {
 
   const fetchSeriais = async () => {
     try {
-      const response = await api.get("/v1/product-serials/seriais-washing-complete/");
+      const response = await api.get("/v1/product-serials/", {
+        params: { status: "WASHING COMPLETE" }
+      });
       setSeriaisAptos(response.data);
     } catch (error) {
       console.error("Erro ao buscar seriais:", error);
@@ -86,12 +89,12 @@ function EsterelizationPage() {
     try {
       await Promise.all(
         selecionadosConfirmacao.map(async (id) => {
-          const encontrado = emAndamento.find(item => item.produto_serial === id);
+          const encontrado = emAndamento.find(item => item.produto_serial_id === id);
           if (!encontrado) return;
       
           await api.post("/v1/process-histories/", {
-            serial: encontrado.produto_serial, 
-            etapa: "ESTERELIZATION COMPLETED",
+            serial: encontrado.produto_serial_id, 
+            etapa: "ESTERELIZATION COMPLETE",
           });
         })
       );
@@ -168,12 +171,12 @@ function EsterelizationPage() {
                       <td>
                         <input
                           type="checkbox"
-                          checked={selecionadosConfirmacao.includes(s.produto_serial)}
+                          checked={selecionadosConfirmacao.includes(s.produto_serial_id)}
                           onChange={() =>
                             setSelecionadosConfirmacao(prev =>
-                              prev.includes(s.produto_serial)
-                                ? prev.filter(p => p !== s.produto_serial)
-                                : [...prev, s.produto_serial]
+                              prev.includes(s.produto_serial_id)
+                                ? prev.filter(p => p !== s.produto_serial_id)
+                                : [...prev, s.produto_serial_id]
                             )
                           }
                         />
