@@ -57,37 +57,48 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 
 
 1. 📥 Receiving
-Cadastro de seriais que ainda não entraram no fluxo.
+   Cadastro de seriais que ainda não entraram no fluxo.
 
-Pode receber múltiplos seriais ao mesmo tempo.
+   Pode receber múltiplos seriais ao mesmo tempo.
+
 
 
 2. 🧽 Washing
-Apenas seriais com status RECEIVING são exibidos.
+   Apenas seriais com status RECEIVING são exibidos.
 
-Confirmação de sucesso ou falha no processo.
+   Confirmação de sucesso ou falha no processo.
+
 
 
 3. 🔥 Esterilization
-Apenas seriais com status WASHING COMPLETE ou RECEIVING são listados.
+   Apenas seriais com status WASHING COMPLETE ou RECEIVING são listados.
 
-Confirmação de sucesso ou falha no processo.
+   Confirmação de sucesso ou falha no processo.
+
 
 
 4. 🚚 Distribution
-Distribui materiais para setores.
+   Distribui materiais para setores.
 
-Aceita seriais com status RECEIVING, WASHING COMPLETE ou ESTERELIZATION.
+   Aceita seriais com status RECEIVING, WASHING COMPLETE ou ESTERELIZATION.
+
 
 
 📜 Histórico de Processos
-Toda ação feita em uma etapa é registrada.
 
-O histórico pode ser filtrado por: SERIAL
+
+   Toda ação feita em uma etapa é registrada.
+
+   O histórico pode ser filtrado por: SERIAL
+
+
 
 📎 Observações
-A aplicação segue um fluxo fixo de etapas.
-Cada serial possui um status que é automaticamente atualizado.
+
+
+   A aplicação segue um fluxo fixo de etapas.
+   
+   Cada serial possui um status que é automaticamente atualizado.
 
 O backend possui propriedades úteis nas models para calcular etapas restantes, status atual e validações automáticas.
 
