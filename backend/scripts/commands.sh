@@ -9,10 +9,20 @@ python manage.py migrate --noinput || exit 1
 echo "🔐 Criando superusuário (caso não exista)..."
 python manage.py shell << EOF
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
+
 User = get_user_model()
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+username = 'admin'
+email = 'admin@example.com'
+password = 'admin123'
+
+if not User.objects.filter(username=username).exists():
+    user = User.objects.create_superuser(username, email, password)
     print("✔ Superusuário criado com sucesso!")
+
+    group, _ = Group.objects.get_or_create(name='ADMIN')
+    user.groups.add(group)
+    print("✔ Superusuário adicionado ao grupo ADMIN.")
 else:
     print("ℹ Superusuário já existe.")
 EOF

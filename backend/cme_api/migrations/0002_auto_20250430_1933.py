@@ -6,6 +6,10 @@ def inserir_dados_iniciais(apps, schema_editor):
     Category = apps.get_model("cme_api", "Category")
     Product = apps.get_model("cme_api", "Product")
     ProductSerial = apps.get_model("cme_api", "ProductSerial")
+    Group = apps.get_model('auth', 'Group')
+    nomes = ['ADMIN', 'TECNICO', 'ENFERMEIRO']
+    for nome in nomes:
+        Group.objects.get_or_create(name=nome)
     
     produtos = Product.objects.all()
         
