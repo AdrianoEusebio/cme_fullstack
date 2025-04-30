@@ -7,5 +7,5 @@ from .distribution_serializer import DistributionSerializer
 from .process_history_serializer import ProcessHistorySerializer
 from .process_history_create_serializer import ProcessHistoryCreateSerializer
 from .esterelization_serializer import EsterelizationSerializer
-
-
+from .user_serializer import UserSerializer
+from .group_serializer import GroupSerializer

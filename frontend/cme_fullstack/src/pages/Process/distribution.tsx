@@ -37,7 +37,7 @@ function DistributionPage() {
   const fetchSeriaisDisponiveis = async () => {
     try {
       const response = await api.get("/v1/product-serials/", {
-        params: { status: "RECEIVING,WASHING COMPLETE,ESTERELIZATION" }
+        params: { status: "RECEIVING,WASHING COMPLETE,ESTERELIZATION COMPLETE," }
       });
       setSeriaisDisponiveis(response.data);
     } catch (error) {
@@ -72,7 +72,7 @@ function DistributionPage() {
       await Promise.all(
         selecionados.map(async (serial) => {
           await api.post("/v1/distributions/", {
-            produto_serial: serial.id,
+            produto_serial: serial.codigo_serial,
             sector: setor,
           });
         })

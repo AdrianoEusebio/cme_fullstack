@@ -6,6 +6,8 @@ import ReceivingPage from "@/pages/Process/receiving";
 import WashingPage from "./pages/Process/washing";
 import DistributionPage from "./pages/Process/distribution";
 import EsterelizationPage from "./pages/Process/esterelization";
+import UserPage from "./pages/Process/user";
+import ProductPage from "./pages/Process/product";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<HomePage />} />
+          <Route path="/usuarios" element={<UserPage />} />
+          <Route path="/produtos" element={<ProductPage />} />
           <Route path="/recebimento" element={<ReceivingPage />}/>
           <Route path="/lavagem" element={<WashingPage />}/>
           <Route path="/distribuicao" element={<DistributionPage />}/>

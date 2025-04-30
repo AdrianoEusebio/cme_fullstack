@@ -35,7 +35,7 @@ function EsterelizationPage() {
   const fetchSeriais = async () => {
     try {
       const response = await api.get("/v1/product-serials/", {
-        params: { status: "WASHING COMPLETE" }
+        params: { status: "WASHING COMPLETE,RECEIVING" }
       });
       setSeriaisAptos(response.data);
     } catch (error) {
@@ -95,6 +95,10 @@ function EsterelizationPage() {
           await api.post("/v1/process-histories/", {
             serial: encontrado.produto_serial_id, 
             etapa: "ESTERELIZATION COMPLETE",
+          });
+
+          await api.patch(`/v1/esterelizations/${encontrado.id}/`, {
+            isEsterelization: true
           });
         })
       );

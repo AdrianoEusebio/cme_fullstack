@@ -11,9 +11,12 @@ from cme_api.views.process_history_viewset import ProcessHistoryViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
 from cme_api.views.token_viewset import CustomTokenObtainPairView
 from cme_api.views.esterelization_viewset import EsterelizationViewSet
+from cme_api.views.user_viewset import UserViewSet
+from cme_api.views.group_viewset import GroupViewSet
 
 
 router = DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
 router.register(r'products', ProductViewSet, basename='products')
 router.register(r'product-serials', ProductSerialViewSet, basename='product-serials')
 router.register(r'categories', CategoryViewSet, basename='categories')
@@ -22,6 +25,7 @@ router.register(r'receivings', ReceivingViewSet, basename='receivings')
 router.register(r'distributions', DistributionViewSet, basename='distributions')
 router.register(r'process-histories', ProcessHistoryViewSet, basename='process-histories')
 router.register(r'esterelizations', EsterelizationViewSet, basename='esterelization')
+router.register(r'groups', GroupViewSet)
 
 urlpatterns = [
     path('v1/', include(router.urls)),
