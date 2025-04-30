@@ -31,4 +31,4 @@ RUN mkdir -p /backend/data/web/static && \
 
 ENV PATH="/scripts:/venv/bin:$PATH"
 
-CMD [ "commands.sh" ]
+CMD [ "scripts/commands.sh" ]
