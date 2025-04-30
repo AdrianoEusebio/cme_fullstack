@@ -9,7 +9,6 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 - **Django REST Framework**
 - **PostgreSQL**
 - **Docker**
-- **RabbitMQ** (para filas futuras)
 - **Swagger** para documentação da API
 - **Padrões seguidos:** arquitetura baseada em ViewSets, Services e Serializers organizados.
 
@@ -17,7 +16,6 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 - **React**
 - **TypeScript**
 - **TailwindCSS**
-- **PrimeReact** (para componentes visuais)
 - **Axios** (para requisições à API)
 - **React Router**
 
