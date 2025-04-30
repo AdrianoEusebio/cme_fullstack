@@ -1,8 +1,6 @@
 from django.db import models
 from django.db.models import TextChoices
-from django.utils.text import slugify
 from django.contrib.auth import get_user_model
-from django.utils import timezone
 
 # Create your models here.
 
@@ -74,14 +72,24 @@ class Washing(models.Model):
         return self.user.username
 
 
+class Esterelization(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_esterelization")
+    produto_serial = models.ForeignKey("ProductSerial", on_delete=models.CASCADE, related_name="entry_esterelization")
+    entry_data = models.DateTimeField(auto_now_add=True)
+    isEsterelization = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.produto_serial.codigo_serial} - {self.user.username}"
+
 class ProcessHistory(models.Model):
     
     class EtapaChoices(TextChoices):
-        RECEIVING = "RECEIVING", "Receiving"
-        DISTRIBUTION = "DISTRIBUTION", "Distribution"
-        WASHING = "WASHING", "Washing"
-        DISCARDED = "DISCARDED", "Discarded"
-        WASHING_COMPLETED = "WASHING COMPLETE"
+        RECEIVING = "RECEIVING", "Recebimento"
+        DISTRIBUTION = "DISTRIBUTION", "Distribuição"
+        WASHING = "WASHING", "Lavagem Iniciada"
+        WASHING_COMPLETED = "WASHING COMPLETE", "Lavagem Concluída"
+        ESTERELIZATION = 'ESTERELIZATION', 'Esterilização Iniciada'
+        ESTERELIZATION_COMPLETED = 'ESTERELIZATION COMPLETE', 'Esterilização Concluída'
     
     serial = models.ForeignKey("ProductSerial", on_delete=models.CASCADE, related_name="entry_process_history")
     etapa = models.CharField(
@@ -95,6 +103,8 @@ class ProcessHistory(models.Model):
     receiving = models.ForeignKey("Receiving", on_delete=models.CASCADE, related_name="receiving_process_history", null=True, blank=True)
     distribution = models.ForeignKey("Distribution", on_delete=models.CASCADE, related_name="distribution_process_history", null=True, blank=True)
     washing = models.ForeignKey("Washing", on_delete=models.CASCADE, related_name="washing_process_history", null=True, blank=True)
+    esterelization = models.ForeignKey("Esterelization", on_delete=models.CASCADE, related_name="esterelization_process_history", null=True, blank=True)
 
     def __str__(self):
         return f"{self.serial.codigo_serial} - {self.user.username} - {self.etapa}"
+    

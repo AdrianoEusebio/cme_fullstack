@@ -6,5 +6,6 @@ from .receiving_serializer import ReceivingSerializer
 from .distribution_serializer import DistributionSerializer
 from .process_history_serializer import ProcessHistorySerializer
 from .process_history_create_serializer import ProcessHistoryCreateSerializer
+from .esterelization_serializer import EsterelizationSerializer
 
 

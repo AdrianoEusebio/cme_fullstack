@@ -9,9 +9,7 @@ function DrawerNavigation({ group }: DrawerNavigationProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isActive = (route: string) => {
-    return location.pathname === `/${route}`;
-  };
+  const isActive = (route: string) => location.pathname === `/${route}`;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -28,12 +26,12 @@ function DrawerNavigation({ group }: DrawerNavigationProps) {
     <aside className="sidebar">
       <div className="menu-top">
         <h2>Menu</h2>
-
         <Link to="/home" className={isActive("home") ? "active" : ""}>Histórico</Link>
         {(isAdmin || isTecnico) && (
           <>
             <Link to="/recebimento" className={isActive("recebimento") ? "active" : ""}>Recebimento</Link>
             <Link to="/lavagem" className={isActive("lavagem") ? "active" : ""}>Lavagem</Link>
+            <Link to="/esterelizacao" className={isActive("esterelizacao") ? "active" : ""}>Esterelização</Link>
             <Link to="/distribuicao" className={isActive("distribuicao") ? "active" : ""}>Distribuição</Link>
           </>
         )}

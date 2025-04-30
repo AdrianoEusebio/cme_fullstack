@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
 import DrawerNavigation from "@/components/DrawerNavigation";
-import "./style.css";
+import "@/styles/global.css";
 
 interface ProcessHistoryItem {
   id: number;

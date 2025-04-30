@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
 import DrawerNavigation from "@/components/DrawerNavigation";
 import PopupMessage from "@/components/PopupMessage";
-import "./style.css";
+import "@/styles/global.css";
 
 interface SerialItem {
   id: number;

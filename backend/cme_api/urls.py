@@ -10,6 +10,7 @@ from cme_api.views.distribution_viewset import DistributionViewSet
 from cme_api.views.process_history_viewset import ProcessHistoryViewSet
 from rest_framework_simplejwt.views import TokenRefreshView
 from cme_api.views.token_viewset import CustomTokenObtainPairView
+from cme_api.views.esterelization_viewset import EsterelizationViewSet
 
 
 router = DefaultRouter()
@@ -20,6 +21,7 @@ router.register(r'washings', WashingViewSet, basename='washings')
 router.register(r'receivings', ReceivingViewSet, basename='receivings')
 router.register(r'distributions', DistributionViewSet, basename='distributions')
 router.register(r'process-histories', ProcessHistoryViewSet, basename='process-histories')
+router.register(r'esterelizations', EsterelizationViewSet, basename='esterelization')
 
 urlpatterns = [
     path('v1/', include(router.urls)),

@@ -6,7 +6,8 @@ from cme_api.models import (
     Distribution,
     Washing,
     ProcessHistory,
-    Category
+    Category,
+    Esterelization,
 ) 
 
 admin.site.register(Category)
@@ -16,3 +17,4 @@ admin.site.register(Receiving)
 admin.site.register(Distribution)
 admin.site.register(Washing)
 admin.site.register(ProcessHistory )
+admin.site.register(Esterelization)

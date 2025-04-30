@@ -13,7 +13,7 @@ class DistributionViewSet(viewsets.ModelViewSet):
     search_fields = ['protudo_serial', 'user', 'sector']
     
     def perform_create(self, serializer):
-        distribution = serializer.save()
+        distribution = serializer.save(user=self.request.user)
         
         ProcessHistory.objects.create(
             serial = distribution.produto_serial,
@@ -24,3 +24,4 @@ class DistributionViewSet(viewsets.ModelViewSet):
             distribution = distribution,
             washing = None
         )
+
