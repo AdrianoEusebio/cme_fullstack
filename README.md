@@ -45,32 +45,40 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 
    Admin Django: http://localhost:8000/admin
 
+
 🔑 Credenciais Padrão (Superusuário Django)
    ```bash
    Usuário: admin
    Senha: admin123
    ```
 
+
 🔁 Principais Funcionalidades
+
+
 1. 📥 Receiving
 Cadastro de seriais que ainda não entraram no fluxo.
 
 Pode receber múltiplos seriais ao mesmo tempo.
+
 
 2. 🧽 Washing
 Apenas seriais com status RECEIVING são exibidos.
 
 Confirmação de sucesso ou falha no processo.
 
+
 3. 🔥 Esterilization
 Apenas seriais com status WASHING COMPLETE ou RECEIVING são listados.
 
 Confirmação de sucesso ou falha no processo.
 
+
 4. 🚚 Distribution
 Distribui materiais para setores.
 
 Aceita seriais com status RECEIVING, WASHING COMPLETE ou ESTERELIZATION.
+
 
 📜 Histórico de Processos
 Toda ação feita em uma etapa é registrada.
