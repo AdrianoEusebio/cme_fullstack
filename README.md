@@ -1,18 +1,35 @@
 # CME Fullstack Challenge 🚀
 
-Este projeto é uma solução para o desafio técnico Fullstack proposto pelo Grupo Bringel.
+Este é um sistema completo para rastreabilidade de materiais em uma Central de Material Esterilizado (CME), com backend em Django e frontend em React + TypeScript.
 
-## 🧰 Tecnologias
+## 🧰 Tecnologias Utilizadas
 
-- Backend: Python (Django)
-- Frontend: React
-- Banco de Dados: PostgreSQL
-- Docker + Docker Compose
+### Backend (API)
+- **Django 4.1+**
+- **Django REST Framework**
+- **PostgreSQL**
+- **Docker**
+- **RabbitMQ** (para filas futuras)
+- **Swagger** para documentação da API
+- **Padrões seguidos:** arquitetura baseada em ViewSets, Services e Serializers organizados.
 
-## 🚀 Executar o projeto
+### Frontend
+- **React**
+- **TypeScript**
+- **TailwindCSS**
+- **PrimeReact** (para componentes visuais)
+- **Axios** (para requisições à API)
+- **React Router**
 
-1. Copie o `.env.example` para `.env`
-2. Rode:
+## 🐳 Como Executar o Projeto com Docker
 
-```bash
-docker-compose up --build
+### Requisitos:
+- Docker e Docker Compose instalados
+
+### Etapas:
+
+1. Clone o repositório:
+   ```bash
+   git clone https://seurepositorio.git](https://github.com/AdrianoEusebio/cme_fullstack
+   cd seu-projeto
+  bash```
