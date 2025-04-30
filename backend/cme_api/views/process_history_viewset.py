@@ -30,3 +30,15 @@ class ProcessHistoryViewSet(viewsets.ModelViewSet):
 
         read_serializer = self.get_serializer(instance)
         return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        user_param = self.request.query_params.get("user")
+        etapa_param = self.request.query_params.get("etapa")
+        if user_param:
+            queryset = queryset.filter(user__username__icontains=user_param)
+
+        if etapa_param:
+            queryset = queryset.filter(etapa=etapa_param)
+
+        return queryset.order_by("-entry_data")

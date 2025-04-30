@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
 import DrawerNavigation from "@/components/DrawerNavigation";
 import PopupMessage from "@/components/PopupMessage";
+import ConfirmPopup from "@/components/ConfirmPopup/ConfirmPopup";
 import "@/styles/global.css";
 
 interface SerialItem {
@@ -18,6 +19,7 @@ function WashingPage() {
   const [selectedIdsDisponiveis, setSelectedIdsDisponiveis] = useState<number[]>([]);
   const [selectedIdsParaLavar, setSelectedIdsParaLavar] = useState<number[]>([]);
   const [popup, setPopup] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +48,7 @@ function WashingPage() {
   const adicionarParaLavagem = async () => {
     const selecionados = seriaisDisponiveis.filter(serial => selectedIdsDisponiveis.includes(serial.id));
     if (selecionados.length === 0) {
-      alert("Nenhum serial selecionado para adicionar à lavagem.");
+      setPopup({ type: "error", message: "Nenhum serial selecionado para adicionar à lavagem." });
       return;
     }
 
@@ -72,15 +74,16 @@ function WashingPage() {
     }
   };
 
-  const confirmarLavagem = async () => {
+  const confirmarLavagem = () => {
     if (selectedIdsParaLavar.length === 0) {
-      alert("Nenhum produto selecionado para confirmar lavagem.");
+      setPopup({ type: "error", message: "Nenhum produto selecionado para confirmar lavagem." });
       return;
     }
+    setMostrarConfirmacao(true);
+  };
 
-    const confirmar = window.confirm("Tem certeza que deseja marcar esses itens como LAVADOS?");
-    if (!confirmar) return;
-
+  const confirmarLavagemExecutar = async () => {
+    setMostrarConfirmacao(false);
     try {
       await Promise.all(selectedIdsParaLavar.map(async (id) => {
         await api.post("/v1/process-histories/", {
@@ -202,6 +205,14 @@ function WashingPage() {
             </button>
           </section>
         </div>
+
+        {mostrarConfirmacao && (
+          <ConfirmPopup
+            message="Deseja confirmar os itens selecionados como LAVADOS?"
+            onConfirm={confirmarLavagemExecutar}
+            onCancel={() => setMostrarConfirmacao(false)}
+          />
+        )}
 
         {popup && (
           <PopupMessage

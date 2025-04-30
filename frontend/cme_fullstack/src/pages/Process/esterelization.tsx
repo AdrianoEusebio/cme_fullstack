@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "@/services/api";
 import DrawerNavigation from "@/components/DrawerNavigation";
 import PopupMessage from "@/components/PopupMessage";
+import ConfirmPopup from "@/components/ConfirmPopup/ConfirmPopup";
 import "@/styles/global.css";
 
 interface SerialItem {
@@ -12,8 +13,8 @@ interface SerialItem {
 
 interface EsterelizationItem {
   id: number;
-  produto_serial: string;          
-  produto_serial_id: number;       
+  produto_serial: string;
+  produto_serial_id: number;
   codigo_serial: string;
   produto_nome: string;
   entry_data: string;
@@ -21,6 +22,7 @@ interface EsterelizationItem {
 }
 
 function EsterelizationPage() {
+  const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
   const [seriaisAptos, setSeriaisAptos] = useState<SerialItem[]>([]);
   const [emAndamento, setEmAndamento] = useState<EsterelizationItem[]>([]);
   const [selecionadosParaRegistrar, setSelecionadosParaRegistrar] = useState<number[]>([]);
@@ -35,7 +37,7 @@ function EsterelizationPage() {
   const fetchSeriais = async () => {
     try {
       const response = await api.get("/v1/product-serials/", {
-        params: { status: "WASHING COMPLETE,RECEIVING" }
+        params: { status: "WASHING COMPLETE,RECEIVING" },
       });
       setSeriaisAptos(response.data);
     } catch (error) {
@@ -54,13 +56,13 @@ function EsterelizationPage() {
 
   const handleRegistrar = async () => {
     if (selecionadosParaRegistrar.length === 0) {
-      alert("Selecione os seriais para registrar.");
+      setPopup({ type: "error", message: "Selecione ao menos um item para registrar." });
       return;
     }
     try {
       await Promise.all(
-        selecionadosParaRegistrar.map(id => {
-          const serial = seriaisAptos.find(s => s.id === id);
+        selecionadosParaRegistrar.map((id) => {
+          const serial = seriaisAptos.find((s) => s.id === id);
           return api.post("/v1/esterelizations/", {
             produto_serial: serial?.codigo_serial,
             isEsterelization: false,
@@ -77,28 +79,29 @@ function EsterelizationPage() {
     }
   };
 
-  const handleConfirmar = async () => {
+  const handleConfirmar = () => {
     if (selecionadosConfirmacao.length === 0) {
-      alert("Selecione os seriais para confirmar.");
+      setPopup({ type: "error", message: "Selecione os seriais para confirmar." });
       return;
     }
+    setMostrarConfirmacao(true);
+  };
 
-    const sucesso = confirm("A esterelização foi concluída com sucesso?");
-    if (!sucesso) return;
-
+  const executarConfirmacao = async () => {
+    setMostrarConfirmacao(false);
     try {
       await Promise.all(
         selecionadosConfirmacao.map(async (id) => {
           const encontrado = emAndamento.find(item => item.produto_serial_id === id);
           if (!encontrado) return;
-      
+
           await api.post("/v1/process-histories/", {
-            serial: encontrado.produto_serial_id, 
+            serial: encontrado.produto_serial_id,
             etapa: "ESTERELIZATION COMPLETE",
           });
 
           await api.patch(`/v1/esterelizations/${encontrado.id}/`, {
-            isEsterelization: true
+            isEsterelization: true,
           });
         })
       );
@@ -132,14 +135,14 @@ function EsterelizationPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {seriaisAptos.map(s => (
+                  {seriaisAptos.map((s) => (
                     <tr key={s.id}>
                       <td>
                         <input
                           type="checkbox"
                           checked={selecionadosParaRegistrar.includes(s.id)}
                           onChange={() =>
-                            setSelecionadosParaRegistrar(prev =>
+                            setSelecionadosParaRegistrar((prev) =>
                               prev.includes(s.id) ? prev.filter(p => p !== s.id) : [...prev, s.id]
                             )
                           }
@@ -170,16 +173,16 @@ function EsterelizationPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {emAndamento.map(s => (
+                  {emAndamento.map((s) => (
                     <tr key={s.id}>
                       <td>
                         <input
                           type="checkbox"
                           checked={selecionadosConfirmacao.includes(s.produto_serial_id)}
                           onChange={() =>
-                            setSelecionadosConfirmacao(prev =>
+                            setSelecionadosConfirmacao((prev) =>
                               prev.includes(s.produto_serial_id)
-                                ? prev.filter(p => p !== s.produto_serial_id)
+                                ? prev.filter((p) => p !== s.produto_serial_id)
                                 : [...prev, s.produto_serial_id]
                             )
                           }
@@ -199,8 +202,20 @@ function EsterelizationPage() {
           </section>
         </div>
 
+        {mostrarConfirmacao && (
+          <ConfirmPopup
+            message="A esterelização foi concluída com sucesso?"
+            onConfirm={executarConfirmacao}
+            onCancel={() => setMostrarConfirmacao(false)}
+          />
+        )}
+
         {popup && (
-          <PopupMessage type={popup.type} message={popup.message} onClose={() => setPopup(null)} />
+          <PopupMessage
+            type={popup.type}
+            message={popup.message}
+            onClose={() => setPopup(null)}
+          />
         )}
       </main>
     </div>

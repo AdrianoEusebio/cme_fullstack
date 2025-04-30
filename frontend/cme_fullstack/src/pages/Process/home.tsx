@@ -18,8 +18,6 @@ function HomePage() {
     []
   );
   const [selectedSerial, setSelectedSerial] = useState<string>("");
-  const navigate = useNavigate();
-
   useEffect(() => {
     const group = localStorage.getItem("group");
     setIsAdmin(group === "Admin");
@@ -69,13 +67,13 @@ function HomePage() {
 
         <section className="process-history">
           <div className="filter-wrapper">
-            <label htmlFor="serialFilter">Filtrar por Serial:</label>
+            <label htmlFor="serialFilter">Filtrar por:</label>
             <select
               id="serialFilter"
               value={selectedSerial}
               onChange={(e) => setSelectedSerial(e.target.value)}
             >
-              <option value="">Todos</option>
+              <option value="">SERIAL</option>
               {uniqueSerials.map((serial) => (
                 <option key={serial} value={serial}>
                   {serial}
