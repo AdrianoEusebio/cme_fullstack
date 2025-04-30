@@ -84,7 +84,7 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 
 
 
-📜 Histórico de Processos
+5. 📜 Histórico de Processos
 
 
    Toda ação feita em uma etapa é registrada.
@@ -93,7 +93,7 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 
 
 
-📎 Observações
+## 📎 Observações
 
 
    A aplicação segue um fluxo fixo de etapas.
