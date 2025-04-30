@@ -39,11 +39,11 @@ Este é um sistema completo para rastreabilidade de materiais em uma Central de 
 
 3. Acesse
 
-Backend: http://localhost:8000/swagger
+   Backend: http://localhost:8000/swagger
 
-Frontend: http://localhost:5173/login
+   Frontend: http://localhost:5173/login
 
-Admin Django: http://localhost:8000/admin
+   Admin Django: http://localhost:8000/admin
 
 🔑 Credenciais Padrão (Superusuário Django)
    ```bash
